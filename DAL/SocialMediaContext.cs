@@ -1,17 +1,19 @@
-﻿using System.Data.Entity;
-using Entities;
+﻿using Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DAL
 {
-    public class SocialMediaContext : DbContext, ISocialMediaContext
-    {
-        public DbSet<PostEntity> Posts { get; }
-        public DbSet<UserEntity> Users { get; }
-        
-        public SocialMediaContext() : base("SocialDB")
-        { }
-        
-        
-        
-    }
+	public class SocialMediaContext : DbContext
+	{
+		public DbSet<PostEntity> Posts { get; set; }
+		public DbSet<UserEntity> Users { get; set; }
+
+		public SocialMediaContext(DbContextOptions<SocialMediaContext> options)
+			: base(options)
+		{ }
+
+
+
+	}
 }
