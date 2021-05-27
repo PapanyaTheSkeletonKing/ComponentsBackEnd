@@ -7,14 +7,16 @@ namespace DAL
 	public class UnitOfWork : IUnitOfWork
 	{
 		public readonly SocialMediaContext AppContext;
-		public IRepository<UserEntity> Users { get; }
-		public IRepository<PostEntity> Posts { get; }
+		public IUserRepository Users { get; }
+		public PostsRepository Posts { get; }
+		public IFollowRepository Followings { get; }
 
 		public UnitOfWork(SocialMediaContext context)
 		{
 			AppContext = context;
-			Users = new GenericRepository<UserEntity>(context.Users);
-			Posts = new GenericRepository<PostEntity>(context.Posts);
+			Users = new UserRepository(context.Users);
+			Posts = new PostsRepository(context.Posts);
+			Followings = new FollowRepository(context.Followings);
 		}
 
 		public void SaveChanges()

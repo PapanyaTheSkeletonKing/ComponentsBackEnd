@@ -1,8 +1,8 @@
-using System.Linq;
-using Entities;
+using System.Linq;using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Services;
+using Services.Mappers;
 using Utils;
 
 
@@ -21,40 +21,30 @@ namespace ASP.NETCoreWebApplication.Controllers
 			_userService = userService;
 			_authService = authService;
 		}
-
+		//user/id => user json
 		[HttpGet("{id:int}")]
 		public string Get(int id)
 		{
-			return _userService.GetAsJson(_userService.Get(id));
+			return _userService.Get(id).AsJson();
 			//var users = _userService.GetAll();
 			//UserModel user = _userService.GetAll().First();
 			//return new FileContentResult(user.Image, "image/jpg");
 		}
-		
-		
-		
-		
-		
-		[HttpPut("{id:int}")]
+		//user/follow?userId=
+		[HttpGet("follow")]
+		public string Follow(int userId) => _userService.Get(1)
+				.Followers.First()
+				.AsJson();
+			//var users = _userService.GetAll();
+			//UserModel user = _userService.GetAll().First();
+			//return new FileContentResult(user.Image, "image/jpg");
+		//user/id?status=choto
+		[HttpPut("{id:int}")] 
 		public void Put(int id,[FromQuery(Name =  "status")]int status)
 		{
 			var user = _userService.Get(id);
 			user.Status = (UserStatus)status;
 			_userService.Update(user);
 		}
-		
-		[HttpPost]
-		[Route("login")]
-		public string Login(string email,string password)
-		{
-			var userToAuth = _authService.AuthUser(email, password);
-			
-			_authService.UpdateStatus(userToAuth,UserStatus.Authed);
-			return _userService.GetAsJson(userToAuth);
-		}
-		
-		
-		
-		
 	}
 }

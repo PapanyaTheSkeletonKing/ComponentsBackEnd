@@ -5,7 +5,8 @@ namespace DAL
 {
 	public interface ISocialMediaContext
 	{
-		DbSet<UserEntity> Users { get; }
-		DbSet<PostEntity> Posts { get; }
+		DbSet<UserEntity> Users { get; set; }
+		DbSet<PostEntity> Posts { get; set; }
+		DbSet<FollowEntity> FollowEntities { get; set; }
 	}
 }

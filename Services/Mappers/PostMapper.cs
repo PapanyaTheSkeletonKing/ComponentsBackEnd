@@ -11,7 +11,7 @@ namespace Services.Mappers
 			CreationDate = entity.CreationDate,
 			Text = entity.Text
 		};
-
+		
 		public static PostModel ToModel(this PostEntity entity) => new()
 		{
 			Id = entity.Id,
@@ -19,6 +19,6 @@ namespace Services.Mappers
 			CreationDate = entity.CreationDate,
 			Text = entity.Text
 		};
-
+	
 	}
 }

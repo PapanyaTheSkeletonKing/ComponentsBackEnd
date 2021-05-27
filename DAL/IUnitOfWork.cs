@@ -1,4 +1,5 @@
 using Entities;
+using Repositories;
 using Repositories.Abstractions;
 
 
@@ -6,8 +7,9 @@ namespace DAL
 {
 	public interface IUnitOfWork
 	{
-		IRepository<UserEntity> Users { get; }
-		IRepository<PostEntity> Posts { get; }
+		IUserRepository Users { get; }
+		PostsRepository Posts { get; }
+		IFollowRepository Followings { get; }
 
 		void SaveChanges();
 	}

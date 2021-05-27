@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Entities;
 using Model;
+using Models;
 
 namespace Services.Mappers
 {
@@ -20,6 +22,16 @@ namespace Services.Mappers
 				: entity.Posts
 					.Select(post => post.ToModel())
 					.ToList(),
+			Followers = entity.Followers == null
+				? new List<FollowerModel>() 
+				: entity.Followers
+					.Select(follow => follow.Follower.ToFollowerModel())
+					.ToList(),
+			Followed = entity.Followeds == null
+				? new List<FollowerModel>() 
+				: entity.Followeds
+					.Select(follow => follow.Followed.ToFollowerModel())
+					.ToList(),
 			Status = entity.Status
 		};
 
@@ -31,5 +43,8 @@ namespace Services.Mappers
 			Image = entity.Image,
 			Status = entity.Status,
 		};
+		public static string AsJson(this UserModel model) => 
+			JsonSerializer.Serialize(model);
+		
 	}
 }

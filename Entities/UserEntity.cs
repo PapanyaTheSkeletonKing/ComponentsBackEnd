@@ -21,6 +21,11 @@ namespace Entities
 
 		public UserStatus Status { get; set; }
 
-		public virtual ICollection<PostEntity> Posts { get; set; }
+		public List<PostEntity> Posts { get; set; }
+		
+		public List<FollowEntity> Followeds { get; set; }
+		public List<FollowEntity> Followers { get; set; }
+
+		
 	}
 }

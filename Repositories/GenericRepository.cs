@@ -6,44 +6,45 @@ using Repositories.Abstractions;
 
 namespace Repositories
 {
-	public class GenericRepository<TEntity> : IRepository<TEntity>
-		where TEntity : class, IEntity
+	public class GenericRepository<TEntity> where TEntity : class
 
 	{
-		private readonly DbSet<TEntity> DataStorage;
+		protected readonly DbSet<TEntity> _dataStorage;
 
 		public GenericRepository(DbSet<TEntity> dataStorage)
 		{
-			DataStorage = dataStorage;
+			_dataStorage = dataStorage;
 		}
 
-		public void Delete(int id)
+		public virtual void Delete(int id)
 		{
-			var toDelete = DataStorage
+			var toDelete = _dataStorage
 				.Find(id);
 
-			DataStorage.ToList().Remove(toDelete);
+			_dataStorage.ToList().Remove(toDelete);
 		}
 
-		public List<TEntity> GetAll()
+		public virtual List<TEntity> GetAll()
 		{
-			return DataStorage.ToList();
+			var list = _dataStorage.ToList();
+			return list;
 		}
 
 
-		public TEntity GetById(int id)
+		public virtual TEntity GetById(int id)
 		{
-			return DataStorage.Find(id);
+			var entity = _dataStorage.Find(id);
+			return entity;
 		}
 
-		public void Add(TEntity obj)
+		public virtual void Add(TEntity obj)
 		{
-			DataStorage.Add(obj);
+			_dataStorage.Add(obj);
 		}
 
-		public void Update(TEntity obj)
+		public virtual void Update(TEntity obj)
 		{
-			DataStorage.Update(obj);
+			_dataStorage.Update(obj);
 		}
 	}
 }

@@ -5,6 +5,5 @@ namespace Services
 {
 	public interface IUserService : IService<UserModel>
 	{
-		string GetAsJson(UserModel entity);
 	}
 }

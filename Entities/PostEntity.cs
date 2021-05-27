@@ -10,6 +10,6 @@ namespace Entities
 		public string Text { get; set; }
 		public DateTime CreationDate { get; set; }
 
-		public virtual UserEntity Author { get; set; }
+		public UserEntity Author { get; set; }
 	}
 }

@@ -5,55 +5,55 @@ using System.Text.Json.Serialization;
 using DAL;
 using Entities;
 using Model;
+using Models;
 using Services.Mappers;
 
 namespace Services
 {
 	public class UserService : IUserService
 	{
-		private readonly IUnitOfWork _appContext;
+		private readonly IUnitOfWork _unitOfWork;
 
 		public UserService(IUnitOfWork unitOfWork)
 		{
-			_appContext = unitOfWork;
+			_unitOfWork = unitOfWork;
 		}
 
 		public UserModel Get(int id)
 		{
-			var user = _appContext.Users.GetById(id).ToModel();
+			var users = _unitOfWork.Users.GetAll();
+			var chel = _unitOfWork.Followings.GetAll();
+			
+			var user = _unitOfWork.Users.GetById(id).ToModel();
 			return user;
 		}
 
 		public List<UserModel> GetAll()
 		{
-			var list = _appContext.Users.GetAll();
-			return _appContext.Users.GetAll()
+			var users = _unitOfWork.Users.GetAll()
 				.Select(user => user.ToModel())
 				.ToList();
+			return users;
 		}
 
-		public void Add(UserModel entity)
+		public void Add(UserModel model)
 		{
-			_appContext.Users.Add(entity.ToEntity());
-			_appContext.SaveChanges();
+			_unitOfWork.Users.Add(model.ToEntity());
+			_unitOfWork.SaveChanges();
 		}
 		
 		public void Update(UserModel entity)
 		{
-			_appContext.Users.Update(entity.ToEntity());
-			_appContext.SaveChanges();
+			_unitOfWork.Users.Update(entity.ToEntity());
+			_unitOfWork.SaveChanges();
 		}
 		
 		public void Delete(UserModel entity)
 		{
-			_appContext.Users.Delete(entity.Id);
-			_appContext.SaveChanges();
+			_unitOfWork.Users.Delete(entity.Id);
+			_unitOfWork.SaveChanges();
 		}
-
-		public string GetAsJson(UserModel entity)
-		{
-			return JsonSerializer.Serialize(entity);	
-		}
+		
 
 
 	}
